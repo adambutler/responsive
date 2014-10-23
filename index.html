@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <script src="speakClient.js"></script>
+    <style>
+      body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: #aaa;
+        -webkit-font-smoothing: antialiased;
+                font-smoothing: antialiased;
+      }
+
+      small {
+        font-weight: 300;
+      }
+    </style>
+  </head>
+  <body>
+    <audio id="audio"></audio>
+    <div>
+      <h1>Resize Me</h1>
+      <p><small>audio required</small></p>
+    </div>
+  </body>
+  <script>
+    function debounce(func, wait, immediate) {
+      var timeout;
+      return function() {
+        var context = this, args = arguments;
+        var later = function() {
+          timeout = null;
+          if (!immediate) func.apply(context, args);
+        };
+        if (immediate && !timeout) func.apply(context, args);
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+
+    window.onresize = debounce(function() {
+      speak(document.body.clientWidth+" by "+document.body.clientHeight);
+    }, 200);
+  </script>
+</html>
+
